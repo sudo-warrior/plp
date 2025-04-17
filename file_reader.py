@@ -1,35 +1,34 @@
-'''
-🔹 Challenge: Create a program that reads a text file, processes its content, and writes the results to a new file.
+def read_file(filename):
+    """Read the contents of a file and return it."""
+    try:
+        with open(filename, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' does not exist.")
+        return None
+    except IOError:
+        print(f"Error: The file '{filename}' cannot be read.")
+        return None
 
-Task Requirements:
-Create a file called input.txt and write at least five lines of text into it.
-Write a Python script to:
-  Read the contents of input.txt.
-  Count the number of words in the file.
-  Convert all text to uppercase.
-  Write the processed text and the word count to a new file called output.txt.
-  Print a success message once the new file is created.
-'''
+def write_file(filename, content):
+    """Write content to a new file."""
+    try:
+        with open(filename, 'w') as file:
+            file.write(content)
+        print(f"Modified content has been written to '{filename}'.")
+    except IOError:
+        print(f"Error: The file '{filename}' cannot be written.")
 
-with open('input.txt', 'w') as f:
-  f.write("this is the first line")
-  f.write("this is the second line")
-  f.write("this is the third line")
-  f.write("this is the forth line")
-  f.write("this is the fifth line")
+def main():
+    input_filename = input("Please enter the filename to read: ")
+    content = read_file(input_filename)
+    
+    if content is not None:
+        # Modify the content (for example, convert to uppercase)
+        modified_content = content.upper()
+        
+        output_filename = input("Please enter the filename to write the modified content to: ")
+        write_file(output_filename, modified_content)
 
-with open('input.txt', 'r'):
-  content = f.read()
-
-# for word count
-word_count = len(content.split())
-
-# for uppercase conversion
-uppercase_content  = content.upper()
-
-with open('output.txt', 'w') as f:
-  f.write(uppercase_content)
-  f.write(f"the word count is: {word_count}")
-
-print("congratulation writing and conversion done")
-  
+if __name__ == "__main__":
+    main()
